@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../logica/operaciones.dart';
-//import 'pantalla_com.dart';
+import 'pantalla_convertidor.dart';
 
 void main() {
   runApp(const CalculadoraApp());
@@ -38,13 +38,13 @@ class _InterfazPrincipalState extends State<InterfazPrincipal> {
   bool _hayError = false;
 
   // ── Colores del tema ────────────────────────────────────────────
-  static const Color _bgColor       = Color(0xFF0D0D0D);
+  static const Color _bgColor = Color(0xFF0D0D0D);
   static const Color _pantallaColor = Color(0xFF1A1A1A);
-  static const Color _accentColor   = Color(0xFFE8FF47); // amarillo-lima
-  static const Color _btnOperacion  = Color(0xFF2A2A2A);
-  static const Color _btnNumero     = Color(0xFF1E1E1E);
-  static const Color _btnEspecial   = Color(0xFF222222);
-  static const Color _txtPrimario   = Color(0xFFFFFFFF);
+  static const Color _accentColor = Color(0xFFE8FF47); // amarillo-lima
+  static const Color _btnOperacion = Color(0xFF2A2A2A);
+  static const Color _btnNumero = Color(0xFF1E1E1E);
+  static const Color _btnEspecial = Color(0xFF222222);
+  static const Color _txtPrimario = Color(0xFFFFFFFF);
   static const Color _txtSecundario = Color(0xFF888888);
 
   // ── Lógica de entrada ───────────────────────────────────────────
@@ -56,7 +56,9 @@ class _InterfazPrincipalState extends State<InterfazPrincipal> {
         _esperandoSegundoOperando = false;
       } else {
         if (digito == '.' && _display.contains('.')) return;
-        _display = (_display == '0' && digito != '.') ? digito : _display + digito;
+        _display = (_display == '0' && digito != '.')
+            ? digito
+            : _display + digito;
       }
     });
   }
@@ -69,10 +71,14 @@ class _InterfazPrincipalState extends State<InterfazPrincipal> {
       _esperandoSegundoOperando = true;
 
       final simbolos = {
-        'suma': '+', 'resta': '−', 'multiplicacion': '×',
-        'division': '÷', 'potencia': '^',
+        'suma': '+',
+        'resta': '−',
+        'multiplicacion': '×',
+        'division': '÷',
+        'potencia': '^',
       };
-      _expresion = '${_formatearNumero(_primerOperando!)} ${simbolos[operacion] ?? operacion}';
+      _expresion =
+          '${_formatearNumero(_primerOperando!)} ${simbolos[operacion] ?? operacion}';
     });
   }
 
@@ -123,8 +129,11 @@ class _InterfazPrincipalState extends State<InterfazPrincipal> {
         }
 
         final simbolos = {
-          'suma': '+', 'resta': '−', 'multiplicacion': '×',
-          'division': '÷', 'potencia': '^',
+          'suma': '+',
+          'resta': '−',
+          'multiplicacion': '×',
+          'division': '÷',
+          'potencia': '^',
         };
         _expresion =
             '${_formatearNumero(_primerOperando!)} ${simbolos[_operacionActual]!} ${_formatearNumero(segundoOperando)} =';
@@ -154,8 +163,12 @@ class _InterfazPrincipalState extends State<InterfazPrincipal> {
 
   void _borrarUltimo() {
     setState(() {
-      if (_hayError) { _limpiar(); return; }
-      if (_display.length <= 1 || (_display.startsWith('-') && _display.length == 2)) {
+      if (_hayError) {
+        _limpiar();
+        return;
+      }
+      if (_display.length <= 1 ||
+          (_display.startsWith('-') && _display.length == 2)) {
         _display = '0';
       } else {
         _display = _display.substring(0, _display.length - 1);
@@ -187,7 +200,9 @@ class _InterfazPrincipalState extends State<InterfazPrincipal> {
   // ── Widgets ─────────────────────────────────────────────────────
 
   Widget _buildPantalla() {
-    final fontSize = _display.length > 12 ? 28.0 : (_display.length > 8 ? 36.0 : 52.0);
+    final fontSize = _display.length > 12
+        ? 28.0
+        : (_display.length > 8 ? 36.0 : 52.0);
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.fromLTRB(24, 20, 24, 16),
@@ -241,12 +256,8 @@ class _InterfazPrincipalState extends State<InterfazPrincipal> {
     double? fontSize,
     bool ancho = false,
   }) {
-    final bg = esAccent
-        ? _accentColor
-        : (colorFondo ?? _btnNumero);
-    final fg = esAccent
-        ? _bgColor
-        : (colorTexto ?? _txtPrimario);
+    final bg = esAccent ? _accentColor : (colorFondo ?? _btnNumero);
+    final fg = esAccent ? _bgColor : (colorTexto ?? _txtPrimario);
 
     return Expanded(
       flex: ancho ? 2 : 1,
@@ -297,7 +308,8 @@ class _InterfazPrincipalState extends State<InterfazPrincipal> {
                     Row(
                       children: [
                         Container(
-                          width: 10, height: 10,
+                          width: 10,
+                          height: 10,
                           decoration: BoxDecoration(
                             color: _accentColor,
                             shape: BoxShape.circle,
@@ -317,13 +329,15 @@ class _InterfazPrincipalState extends State<InterfazPrincipal> {
                     ),
                     GestureDetector(
                       //Boton
-                      /** 
                       onTap: () => Navigator.push(
                         context,
                         MaterialPageRoute(builder: (_) => const PantallaCom()),
-                      ),*/
+                      ),
                       child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 14,
+                          vertical: 7,
+                        ),
                         decoration: BoxDecoration(
                           color: _btnEspecial,
                           borderRadius: BorderRadius.circular(12),
@@ -331,7 +345,11 @@ class _InterfazPrincipalState extends State<InterfazPrincipal> {
                         ),
                         child: const Row(
                           children: [
-                            Icon(Icons.grid_view_rounded, color: Color(0xFF888888), size: 16),
+                            Icon(
+                              Icons.grid_view_rounded,
+                              color: Color(0xFF888888),
+                              size: 16,
+                            ),
                             SizedBox(width: 6),
                             Text(
                               'Com',
@@ -355,115 +373,164 @@ class _InterfazPrincipalState extends State<InterfazPrincipal> {
               const Spacer(),
 
               // ── Fila 1: funciones especiales ───────────────────
-              Row(children: [
-                _buildBoton(
-                  etiqueta: 'AC',
-                  alPresionar: _limpiar,
-                  colorFondo: _btnEspecial,
-                  colorTexto: _accentColor,
-                  fontSize: 20,
-                ),
-                _buildBoton(
-                  etiqueta: '+/−',
-                  alPresionar: _cambiarSigno,
-                  colorFondo: _btnEspecial,
-                ),
-                _buildBoton(
-                  etiqueta: '√',
-                  alPresionar: _calcularRaiz,
-                  colorFondo: _btnEspecial,
-                  colorTexto: _accentColor,
-                ),
-                _buildBoton(
-                  etiqueta: 'xⁿ',
-                  alPresionar: () => _seleccionarOperacion('potencia'),
-                  colorFondo: _operacionActual == 'potencia'
-                      ? _accentColor
-                      : _btnOperacion,
-                  colorTexto: _operacionActual == 'potencia'
-                      ? _bgColor
-                      : _accentColor,
-                ),
-              ]),
+              Row(
+                children: [
+                  _buildBoton(
+                    etiqueta: 'AC',
+                    alPresionar: _limpiar,
+                    colorFondo: _btnEspecial,
+                    colorTexto: _accentColor,
+                    fontSize: 20,
+                  ),
+                  _buildBoton(
+                    etiqueta: '+/−',
+                    alPresionar: _cambiarSigno,
+                    colorFondo: _btnEspecial,
+                  ),
+                  _buildBoton(
+                    etiqueta: '√',
+                    alPresionar: _calcularRaiz,
+                    colorFondo: _btnEspecial,
+                    colorTexto: _accentColor,
+                  ),
+                  _buildBoton(
+                    etiqueta: 'xⁿ',
+                    alPresionar: () => _seleccionarOperacion('potencia'),
+                    colorFondo: _operacionActual == 'potencia'
+                        ? _accentColor
+                        : _btnOperacion,
+                    colorTexto: _operacionActual == 'potencia'
+                        ? _bgColor
+                        : _accentColor,
+                  ),
+                ],
+              ),
 
               // ── Fila 2 ─────────────────────────────────────────
-              Row(children: [
-                _buildBoton(etiqueta: '7', alPresionar: () => _ingresarDigito('7')),
-                _buildBoton(etiqueta: '8', alPresionar: () => _ingresarDigito('8')),
-                _buildBoton(etiqueta: '9', alPresionar: () => _ingresarDigito('9')),
-                _buildBoton(
-                  etiqueta: '÷',
-                  alPresionar: () => _seleccionarOperacion('division'),
-                  colorFondo: _operacionActual == 'division'
-                      ? _accentColor
-                      : _btnOperacion,
-                  colorTexto: _operacionActual == 'division'
-                      ? _bgColor
-                      : _accentColor,
-                ),
-              ]),
+              Row(
+                children: [
+                  _buildBoton(
+                    etiqueta: '7',
+                    alPresionar: () => _ingresarDigito('7'),
+                  ),
+                  _buildBoton(
+                    etiqueta: '8',
+                    alPresionar: () => _ingresarDigito('8'),
+                  ),
+                  _buildBoton(
+                    etiqueta: '9',
+                    alPresionar: () => _ingresarDigito('9'),
+                  ),
+                  _buildBoton(
+                    etiqueta: '÷',
+                    alPresionar: () => _seleccionarOperacion('division'),
+                    colorFondo: _operacionActual == 'division'
+                        ? _accentColor
+                        : _btnOperacion,
+                    colorTexto: _operacionActual == 'division'
+                        ? _bgColor
+                        : _accentColor,
+                  ),
+                ],
+              ),
 
               // ── Fila 3 ─────────────────────────────────────────
-              Row(children: [
-                _buildBoton(etiqueta: '4', alPresionar: () => _ingresarDigito('4')),
-                _buildBoton(etiqueta: '5', alPresionar: () => _ingresarDigito('5')),
-                _buildBoton(etiqueta: '6', alPresionar: () => _ingresarDigito('6')),
-                _buildBoton(
-                  etiqueta: '×',
-                  alPresionar: () => _seleccionarOperacion('multiplicacion'),
-                  colorFondo: _operacionActual == 'multiplicacion'
-                      ? _accentColor
-                      : _btnOperacion,
-                  colorTexto: _operacionActual == 'multiplicacion'
-                      ? _bgColor
-                      : _accentColor,
-                ),
-              ]),
+              Row(
+                children: [
+                  _buildBoton(
+                    etiqueta: '4',
+                    alPresionar: () => _ingresarDigito('4'),
+                  ),
+                  _buildBoton(
+                    etiqueta: '5',
+                    alPresionar: () => _ingresarDigito('5'),
+                  ),
+                  _buildBoton(
+                    etiqueta: '6',
+                    alPresionar: () => _ingresarDigito('6'),
+                  ),
+                  _buildBoton(
+                    etiqueta: '×',
+                    alPresionar: () => _seleccionarOperacion('multiplicacion'),
+                    colorFondo: _operacionActual == 'multiplicacion'
+                        ? _accentColor
+                        : _btnOperacion,
+                    colorTexto: _operacionActual == 'multiplicacion'
+                        ? _bgColor
+                        : _accentColor,
+                  ),
+                ],
+              ),
 
               // ── Fila 4 ─────────────────────────────────────────
-              Row(children: [
-                _buildBoton(etiqueta: '1', alPresionar: () => _ingresarDigito('1')),
-                _buildBoton(etiqueta: '2', alPresionar: () => _ingresarDigito('2')),
-                _buildBoton(etiqueta: '3', alPresionar: () => _ingresarDigito('3')),
-                _buildBoton(
-                  etiqueta: '−',
-                  alPresionar: () => _seleccionarOperacion('resta'),
-                  colorFondo: _operacionActual == 'resta'
-                      ? _accentColor
-                      : _btnOperacion,
-                  colorTexto: _operacionActual == 'resta'
-                      ? _bgColor
-                      : _accentColor,
-                ),
-              ]),
+              Row(
+                children: [
+                  _buildBoton(
+                    etiqueta: '1',
+                    alPresionar: () => _ingresarDigito('1'),
+                  ),
+                  _buildBoton(
+                    etiqueta: '2',
+                    alPresionar: () => _ingresarDigito('2'),
+                  ),
+                  _buildBoton(
+                    etiqueta: '3',
+                    alPresionar: () => _ingresarDigito('3'),
+                  ),
+                  _buildBoton(
+                    etiqueta: '−',
+                    alPresionar: () => _seleccionarOperacion('resta'),
+                    colorFondo: _operacionActual == 'resta'
+                        ? _accentColor
+                        : _btnOperacion,
+                    colorTexto: _operacionActual == 'resta'
+                        ? _bgColor
+                        : _accentColor,
+                  ),
+                ],
+              ),
 
               // ── Fila 5 ─────────────────────────────────────────
-              Row(children: [
-                _buildBoton(etiqueta: '⌫', alPresionar: _borrarUltimo, colorFondo: _btnEspecial),
-                _buildBoton(etiqueta: '0', alPresionar: () => _ingresarDigito('0')),
-                _buildBoton(etiqueta: '.', alPresionar: () => _ingresarDigito('.')),
-                _buildBoton(
-                  etiqueta: '+',
-                  alPresionar: () => _seleccionarOperacion('suma'),
-                  colorFondo: _operacionActual == 'suma'
-                      ? _accentColor
-                      : _btnOperacion,
-                  colorTexto: _operacionActual == 'suma'
-                      ? _bgColor
-                      : _accentColor,
-                ),
-              ]),
+              Row(
+                children: [
+                  _buildBoton(
+                    etiqueta: '⌫',
+                    alPresionar: _borrarUltimo,
+                    colorFondo: _btnEspecial,
+                  ),
+                  _buildBoton(
+                    etiqueta: '0',
+                    alPresionar: () => _ingresarDigito('0'),
+                  ),
+                  _buildBoton(
+                    etiqueta: '.',
+                    alPresionar: () => _ingresarDigito('.'),
+                  ),
+                  _buildBoton(
+                    etiqueta: '+',
+                    alPresionar: () => _seleccionarOperacion('suma'),
+                    colorFondo: _operacionActual == 'suma'
+                        ? _accentColor
+                        : _btnOperacion,
+                    colorTexto: _operacionActual == 'suma'
+                        ? _bgColor
+                        : _accentColor,
+                  ),
+                ],
+              ),
 
               // ── Fila 6: igual ───────────────────────────────────
-              Row(children: [
-                _buildBoton(
-                  etiqueta: '=',
-                  alPresionar: _calcularResultado,
-                  esAccent: true,
-                  ancho: true,
-                  fontSize: 26,
-                ),
-              ]),
+              Row(
+                children: [
+                  _buildBoton(
+                    etiqueta: '=',
+                    alPresionar: _calcularResultado,
+                    esAccent: true,
+                    ancho: true,
+                    fontSize: 26,
+                  ),
+                ],
+              ),
 
               const SizedBox(height: 8),
             ],
