@@ -1,23 +1,9 @@
-String decimalABinario(String decimal) {
-  return int.parse(decimal).toRadixString(2);
-}
-
-String binarioADecimal(String binario) {
-  return int.parse(binario, radix: 2).toString();
-}
-
-String decimalAHexadecimal(String decimal) {
-  return int.parse(decimal).toRadixString(16).toUpperCase();
-}
-
-String hexadecimalADecimal(String hexadecimal) {
-  return int.parse(hexadecimal, radix: 16).toString();
-}
-
-String decimalAOctal(String decimal) {
-  return int.parse(decimal).toRadixString(8);
-}
-
-String octalADecimal(String octal) {
-  return int.parse(octal, radix: 8).toString();
-}
+// ─── Longitud ───────────────────────────────────────────────
+double cmToInches(double cm) => cm / 2.54;
+double inchesToCm(double inches) => inches * 2.54;
+double mToFeet(double m) => m * 3.28084;
+double feetToM(double feet) => feet / 3.28084;
+double mToYards(double m) => m * 1.09361;
+double yardsToM(double yards) => yards / 1.09361;
+double kmToMiles(double km) => km * 0.621371;
+double milesToKm(double miles) => miles / 0.621371;
