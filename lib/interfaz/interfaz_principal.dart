@@ -331,7 +331,7 @@ class _InterfazPrincipalState extends State<InterfazPrincipal> {
                       //Boton
                       onTap: () => Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (_) => const PantallaCom()),
+                        MaterialPageRoute(builder: (_) => const PantallaConvertidor()),
                       ),
                       child: Container(
                         padding: const EdgeInsets.symmetric(
@@ -352,7 +352,7 @@ class _InterfazPrincipalState extends State<InterfazPrincipal> {
                             ),
                             SizedBox(width: 6),
                             Text(
-                              'Com',
+                              'Comversor',
                               style: TextStyle(
                                 color: Color(0xFF888888),
                                 fontSize: 13,
